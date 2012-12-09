@@ -1,0 +1,8 @@
+{
+  "name": "eventLogger",
+  "description": "A eventLogger",
+  "version": "0.0.1",
+  "dependencies": {
+    "watchr": "2.x"
+  }
+}

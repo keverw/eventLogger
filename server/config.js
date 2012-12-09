@@ -1,0 +1,1 @@
+global.watchDir = '/Users/kevinwhitman/Desktop/local servers/socialNetwork/';
