@@ -1,1 +1,1 @@
-global.watchDir = '/Users/kevinwhitman/Desktop/local servers/socialNetwork/';
+global.watchDir = '/Users/kevinwhitman/Desktop/local servers/socialNetwork/logs';
