@@ -25,3 +25,18 @@ To install copy the server folder to location, copy the `config.js.sample` file 
 
 ##write events
 Pick a client that works with the language that you're using. If you don't see one on the list, you may contribute a client in that language back to the project if you wish.
+
+###PHP Client
+
+```
+$logger = new eventLogger('/Users/kevinwhitman/Desktop/local servers/socialNetwork/logs'); //this takes a path of where to log the files to
+```
+Then once you create a logger, log a message such as `$logger->info('test');`
+
+`logLevelName($data, $category = '', $sortCode = '')`
+
+category is a varchar 255 string, can be useful for sorting.
+
+sortCode is a varchar 255 string, useful for sorting also. Say you banned a user you could set it's category to "banUser" and sortcode to the users id like "user_1", then can pull up all events related to that account.
+
+Check out [eventLogger.php line 65](https://github.com/keverw/eventLogger/blob/master/client/php/eventLogger.php#L65) and below, to see all the log level shortcuts
