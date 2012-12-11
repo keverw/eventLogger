@@ -7,9 +7,26 @@ var mysql = require('mysql');
 
 var alreadyFiles = fs.readdirSync(watchDir);
 
+function handleDisconnect(connection) //prevent crash on disconnect
+{
+	connection.on('error', function(err)
+	{
+		if (!err.fatal)
+		{
+			return;
+		}
+
+		if (err.code !== 'PROTOCOL_CONNECTION_LOST')
+		{
+			throw err;
+		}
+	});
+}
+
 for (var i=0; i < maxConnections; i++)
 {
 	var connection = mysql.createConnection(dbConfig);
+	handleDisconnect(connection);
 	connection.connect();
 	revolver.add(connection);
 }
@@ -26,6 +43,19 @@ function processFile(fullPath)
 
 		revolver.fire(function(id, bullet)
 		{
+			//_fatalError
+			fatalErrorObj = bullet._protocol._fatalError;
+			
+			if (typeof fatalErrorObj == 'object' && fatalErrorObj != null && fatalErrorObj.code == 'PROTOCOL_CONNECTION_LOST')
+			{
+				var connection = mysql.createConnection(dbConfig);
+				handleDisconnect(connection);
+				connection.connect();
+				revolver.add(connection, id);
+				processFile(fullPath);
+			}
+			else
+			{
 				var query = bullet.query('INSERT INTO events SET ?', {
 					uuid: dataOBJ.uuid,
 					data: encodedData,
@@ -34,21 +64,12 @@ function processFile(fullPath)
 					logLevel: dataOBJ.level,
 					unixTimeStamp: dataOBJ.time
 				}, function(err, result) {
-					if (err)
-					{
-						if (err.code == 'PROTOCOL_CONNECTION_LOST')
-						{
-							var connection = mysql.createConnection(dbConfig);
-							connection.connect();
-							revolver.add(connection, id);
-							processFile(fullPath);
-						}
-					}
-					else
+					if (!err)
 					{
 						fs.unlink(fullPath);
 					}
-				});
+				});	
+			}
 		});
 	});
 }
