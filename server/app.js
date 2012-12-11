@@ -26,19 +26,29 @@ function processFile(fullPath)
 
 		revolver.fire(function(id, bullet)
 		{
-			var query = bullet.query('INSERT INTO events SET ?', {
-				uuid: dataOBJ.uuid,
-				data: encodedData,
-				category: dataOBJ.category,
-				sortCode: dataOBJ.sortCode,
-				logLevel: dataOBJ.level,
-				unixTimeStamp: dataOBJ.time
-			}, function(err, result) {
-				if (!err)
-				{
-					fs.unlink(fullPath);
-				}
-			});
+				var query = bullet.query('INSERT INTO events SET ?', {
+					uuid: dataOBJ.uuid,
+					data: encodedData,
+					category: dataOBJ.category,
+					sortCode: dataOBJ.sortCode,
+					logLevel: dataOBJ.level,
+					unixTimeStamp: dataOBJ.time
+				}, function(err, result) {
+					if (err)
+					{
+						if (err.code == 'PROTOCOL_CONNECTION_LOST')
+						{
+							var connection = mysql.createConnection(dbConfig);
+							connection.connect();
+							revolver.add(connection, id);
+							processFile(fullPath);
+						}
+					}
+					else
+					{
+						fs.unlink(fullPath);
+					}
+				});
 		});
 	});
 }
