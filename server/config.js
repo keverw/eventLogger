@@ -6,3 +6,5 @@ global.dbConfig = {
 	password: 'root',
 	database: 'eventLogs'
 };
+
+global.maxConnections = 5; //how many connections to create for the pool.

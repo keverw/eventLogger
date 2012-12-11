@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "dependencies": {
     "watchr": "2.x",
-    "mysql": "2.0.0-alpha5"
+    "mysql": "2.0.0-alpha5",
+    "revolver": "0.2.x"
   }
 }

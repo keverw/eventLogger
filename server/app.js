@@ -2,10 +2,17 @@ require('./config.js');
 
 var watchr = require('watchr');
 var fs = require('fs');
+var revolver = require('revolver');
+var mysql = require('mysql');
 
 var alreadyFiles = fs.readdirSync(watchDir);
 
-var mysql = require('mysql');
+for (var i=0; i < maxConnections; i++)
+{
+	var connection = mysql.createConnection(dbConfig);
+	connection.connect();
+	revolver.add(connection);
+}
 
 function processFile(fullPath)
 {
@@ -13,29 +20,26 @@ function processFile(fullPath)
 	{
 		if (err) throw err;
 		
-		var connection = mysql.createConnection(dbConfig);
-
-		connection.connect();
-		
 		var dataOBJ = JSON.parse(data);
 
 		var encodedData = JSON.stringify(dataOBJ.data);
 
-		var query = connection.query('INSERT INTO events SET ?', {
-			uuid: dataOBJ.uuid,
-			data: encodedData,
-			category: dataOBJ.category,
-			sortCode: dataOBJ.sortCode,
-			logLevel: dataOBJ.level,
-			unixTimeStamp: dataOBJ.time
-		}, function(err, result) {
-			if (!err)
-			{
-				fs.unlink(fullPath);
-			}
-  		});
-  		
-  		connection.end();
+		revolver.fire(function(id, bullet)
+		{
+			var query = bullet.query('INSERT INTO events SET ?', {
+				uuid: dataOBJ.uuid,
+				data: encodedData,
+				category: dataOBJ.category,
+				sortCode: dataOBJ.sortCode,
+				logLevel: dataOBJ.level,
+				unixTimeStamp: dataOBJ.time
+			}, function(err, result) {
+				if (!err)
+				{
+					fs.unlink(fullPath);
+				}
+			});
+		});
 	});
 }
 
