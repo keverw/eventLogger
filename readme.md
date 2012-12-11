@@ -23,7 +23,22 @@ The system stores data in MySQL(but other DB systems could be added in the futur
 
 To install copy the server folder to location, copy the `config.js.sample` file and rename to just `config.js`, and put in your details. Run `npm install` in the same location to install all the dependencies.
 
-##write events
+###Database Connection option
+When establishing a connection, you can set the following options:
+
+* `host`: The hostname of the database you are connecting to. (Default:
+  `localhost`)
+* `port`: The port number to connect to. (Default: `3306`)
+* `socketPath`: The path to a unix domain socket to connect to. When used `host`
+  and `port` are ignored.
+* `user`: The MySQL user to authenticate as.
+* `password`: The password of that MySQL user.
+* `database`: Name of the database to use for this connection.
+* `charset`: The charset for the connection. (Default: `'UTF8_GENERAL_CI'`)
+* `insecureAuth`: Allow connecting to MySQL instances that ask for the old
+  (insecure) authentication method. (Default: `false`)
+
+##Write Events
 Pick a client that works with the language that you're using. If you don't see one on the list, you may contribute a client in that language back to the project if you wish.
 
 ###PHP Client

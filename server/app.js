@@ -1,25 +1,50 @@
 require('./config.js');
 
 var watchr = require('watchr');
+var fs = require('fs');
 
-function getExtension(filename) {
-    var i = filename.lastIndexOf('.');
-    return (i < 0) ? '' : filename.substr(i);
+var alreadyFiles = fs.readdirSync(watchDir);
+
+var mysql = require('mysql');
+
+var connection = mysql.createConnection(dbConfig);
+
+connection.connect();
+
+function processFile(file)
+{
+	console.log('File: ' + file);
 }
+
+function getExtension(filename)
+{
+	var i = filename.lastIndexOf('.');
+	return (i < 0) ? '' : filename.substr(i);
+}
+
+for (var name in alreadyFiles)
+{
+	var file = alreadyFiles[name];
+
+	if (getExtension(file) == '.json')
+	{
+		processFile(file);
+	}
+}
+
+delete alreadyFiles;
 
 watchr.watch({
 	path: watchDir,
-	listener: function(eventName,filePath,fileCurrentStat,filePreviousStat)
+	listener: function(eventName, filePath, fileCurrentStat, filePreviousStat)
 	{
 		if (eventName == 'new')
 		{
-			var ext = getExtension(filePath);
-			
-			console.log(ext);
-			
-			console.log('new log in ' + filePath);
+			if (getExtension(filePath) == '.json')
+			{
+				processFile(file);
+			}
 		}
-		console.log('a watch event occured:', arguments);
 	},
 	next: function(err,watcher)
 	{

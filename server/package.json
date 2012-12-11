@@ -3,6 +3,7 @@
   "description": "A eventLogger",
   "version": "0.0.1",
   "dependencies": {
-    "watchr": "2.x"
+    "watchr": "2.x",
+    "mysql": "2.0.0-alpha5"
   }
 }
