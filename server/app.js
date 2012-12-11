@@ -7,13 +7,36 @@ var alreadyFiles = fs.readdirSync(watchDir);
 
 var mysql = require('mysql');
 
-var connection = mysql.createConnection(dbConfig);
-
-connection.connect();
-
-function processFile(file)
+function processFile(fullPath)
 {
-	console.log('File: ' + file);
+	fs.readFile(fullPath, 'utf8', function (err, data)
+	{
+		if (err) throw err;
+		
+		var connection = mysql.createConnection(dbConfig);
+
+		connection.connect();
+		
+		var dataOBJ = JSON.parse(data);
+
+		var encodedData = JSON.stringify(dataOBJ.data);
+
+		var query = connection.query('INSERT INTO events SET ?', {
+			uuid: dataOBJ.uuid,
+			data: encodedData,
+			category: dataOBJ.category,
+			sortCode: dataOBJ.sortCode,
+			logLevel: dataOBJ.level,
+			unixTimeStamp: dataOBJ.time
+		}, function(err, result) {
+			if (!err)
+			{
+				fs.unlink(fullPath);
+			}
+  		});
+  		
+  		connection.end();
+	});
 }
 
 function getExtension(filename)
@@ -28,7 +51,7 @@ for (var name in alreadyFiles)
 
 	if (getExtension(file) == '.json')
 	{
-		processFile(file);
+		processFile(watchDir + '/' + file);
 	}
 }
 
@@ -42,7 +65,8 @@ watchr.watch({
 		{
 			if (getExtension(filePath) == '.json')
 			{
-				processFile(file);
+				processFile(filePath);
+				console.log('New log: ' + filePath);
 			}
 		}
 	},
