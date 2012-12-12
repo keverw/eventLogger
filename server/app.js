@@ -7,6 +7,30 @@ var mysql = require('mysql');
 
 var alreadyFiles = fs.readdirSync(watchDir);
 
+function getTimeStamp()
+{
+    var currentTime = new Date();
+
+    var month = currentTime.getMonth() + 1;
+    var day = currentTime.getDate();
+    var year = currentTime.getFullYear();
+
+    var string = month + "/" + day + "/" + year;
+
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    string += ' ' + hours + ":" + minutes + ":" + seconds + ' ';
+    
+    string += (hours > 11) ? 'PM' : 'AM';
+     
+    return string;
+}
+
 function handleDisconnect(connection) //prevent crash on disconnect
 {
 	connection.on('error', function(err)
@@ -101,13 +125,13 @@ watchr.watch({
 			if (getExtension(filePath) == '.json')
 			{
 				processFile(filePath);
-				console.log('New log: ' + filePath);
+				console.log(getTimeStamp() + ': New log: ' + filePath);
 			}
 		}
 	},
 	next: function(err,watcher)
 	{
 		if (err) throw err;
-		console.log('Watching for logs...');
+		console.log(getTimeStamp() + ': Watching for logs...');
 	}
 });
