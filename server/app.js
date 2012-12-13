@@ -9,26 +9,26 @@ var alreadyFiles = fs.readdirSync(watchDir);
 
 function getTimeStamp()
 {
-    var currentTime = new Date();
+	var currentTime = new Date();
 
-    var month = currentTime.getMonth() + 1;
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
+	var month = currentTime.getMonth() + 1;
+	var day = currentTime.getDate();
+	var year = currentTime.getFullYear();
 
-    var string = month + "/" + day + "/" + year;
+	var string = month + "/" + day + "/" + year;
 
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    var seconds = currentTime.getSeconds();
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
+	var hours = currentTime.getHours();
+	var minutes = currentTime.getMinutes();
+	var seconds = currentTime.getSeconds();
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
 
-    string += ' ' + hours + ":" + minutes + ":" + seconds + ' ';
-    
-    string += (hours > 11) ? 'PM' : 'AM';
-     
-    return string;
+	string += ' ' + hours + ":" + minutes + ":" + seconds + ' ';
+	
+	string += (hours > 11) ? 'PM' : 'AM';
+	
+	return string;
 }
 
 function handleDisconnect(connection) //prevent crash on disconnect
