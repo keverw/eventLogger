@@ -58,6 +58,22 @@ var eventLogger = {
 	info: function(data, category, sortCode)
 	{
 		return this._writeLog(2, category, sortCode, data);
+	},
+	warning: function(data, category, sortCode)
+	{
+		return this._writeLog(3, category, sortCode, data);
+	},
+	error: function(data, category, sortCode)
+	{
+		return this._writeLog(4, category, sortCode, data);
+	},
+	critical: function(data, category, sortCode)
+	{
+		return this._writeLog(5, category, sortCode, data);
+	},
+	emergency: function(data, category, sortCode)
+	{
+		return this._writeLog(6, category, sortCode, data);
 	}
 }
 
