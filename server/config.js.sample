@@ -1,10 +1,10 @@
-global.watchDir = '/Users/kevinwhitman/Desktop/local servers/socialNetwork/logs';
+global.watchDir = 'YOUR PATH HERE';
 
 global.dbConfig = {
-	socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-	user: 'root',
-	password: 'root',
+	host: 'localhost',
+	user: '',
+	password: '',
 	database: 'eventLogs'
 };
 
-global.maxConnections = 5; //how many connections to create for the pool.
+global.maxConnections = 5; //how many connections to create for the pool
