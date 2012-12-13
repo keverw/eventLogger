@@ -47,6 +47,14 @@ var eventLogger = {
 			fs.writeFile(this.logPath + '/' + uuid + '.json', fileContents, 'utf8');
 		}
 	},
+	trace: function(data, category, sortCode)
+	{
+		return this._writeLog(0, category, sortCode, data);
+	},
+	debug: function(data, category, sortCode)
+	{
+		return this._writeLog(1, category, sortCode, data);
+	},
 	info: function(data, category, sortCode)
 	{
 		return this._writeLog(2, category, sortCode, data);
