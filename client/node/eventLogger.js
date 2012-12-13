@@ -1,3 +1,10 @@
+/**
+* @project eventLogger client
+* @version 0.1
+* @url https://github.com/keverw/eventLogger
+* @about A Node.js eventLogger client
+**/
+
 var genUuid = require('node-uuid');
 var fs = require('fs');
 
