@@ -1,5 +1,6 @@
 #server
 server/node_modules/
+server/config.js
 
 #node server
 client/node/node_modules/
