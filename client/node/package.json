@@ -1,5 +1,5 @@
 {
-  "name": "EventLogger-client",
+  "name": "eventlogger-client",
   "description": "A EventLogger(https://github.com/keverw/eventLogger) client.",
   "version": "0.1.0",
   "maintainers": [
@@ -15,6 +15,7 @@
       "url": "https://github.com/keverw/eventLogger"
     }
   ],
+  "main": "eventLogger.js",
   "dependencies": {
     "node-uuid": "1.4.0"
   }
