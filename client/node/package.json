@@ -1,0 +1,21 @@
+{
+  "name": "EventLogger-client",
+  "description": "A EventLogger(https://github.com/keverw/eventLogger) client.",
+  "version": "0.1.0",
+  "maintainers": [
+    {
+      "name": "Kevin Whitman",
+      "email": "",
+      "web": "https://github.com/keverw"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/keverw/eventLogger"
+    }
+  ],
+  "dependencies": {
+    "node-uuid": "1.4.0"
+  }
+}

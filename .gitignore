@@ -1,1 +1,5 @@
+#server
 server/node_modules/
+
+#node server
+client/node/node_modules/
