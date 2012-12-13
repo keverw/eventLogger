@@ -1,4 +1,10 @@
 var genUuid = require('node-uuid');
+var fs = require('fs');
+
+function time()
+{
+  return Math.floor(new Date().getTime() / 1000);
+}
 
 var eventLogger = {
 	logPath: null,
@@ -17,12 +23,21 @@ var eventLogger = {
 		{
 			sortCode = '';
 		}
-	
+		
 		if (this.logPath)
 		{
 			var uuid = genUuid.v4();
 			
-			console.log(uuid);
+			var fileContents = JSON.stringify({
+				uuid: uuid,
+				level: level,
+				time: time(),
+				category: category,
+				sortCode: sortCode,
+				data: data
+			});
+			
+			fs.writeFile(this.logPath + '/' + uuid + '.json', fileContents, 'utf8');
 		}
 	},
 	info: function(data, category, sortCode)
