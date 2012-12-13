@@ -5,5 +5,6 @@ CREATE TABLE `events` (
   `sortCode` varchar(255) NOT NULL DEFAULT '',
   `logLevel` int(1) NOT NULL,
   `unixTimeStamp` bigint(22) NOT NULL,
-  PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`uuid`),
+  FULLTEXT KEY `data` (`data`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
