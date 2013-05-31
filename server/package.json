@@ -1,9 +1,9 @@
 {
   "name": "eventLogger",
   "description": "A eventLogger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
-    "watchr": "2.x",
+    "watchr": "2.4.x",
     "mysql": "2.0.0-alpha5",
     "revolver": "0.2.x"
   }

@@ -118,20 +118,33 @@ delete alreadyFiles;
 
 watchr.watch({
 	path: watchDir,
-	listener: function(eventName, filePath, fileCurrentStat, filePreviousStat)
+	listeners:
 	{
-		if (eventName == 'new')
+		error: function(err)
 		{
-			if (getExtension(filePath) == '.json')
+			console.log(getTimeStamp() + ', an error occured:', err);
+		},
+		watching: function(err,watcherInstance,isWatching)
+		{
+			if (err)
 			{
-				processFile(filePath);
-				console.log(getTimeStamp() + ': New log: ' + filePath);
+				throw err;
+			}
+			else
+			{
+				console.log(getTimeStamp() + ': Watching for logs...');
+			}
+		},
+		change: function(changeType,filePath,fileCurrentStat,filePreviousStat)
+		{
+			if (changeType == 'create')
+			{
+				if (getExtension(filePath) == '.json')
+				{
+					processFile(filePath);
+					console.log(getTimeStamp() + ': New log: ' + filePath);
+				}
 			}
 		}
-	},
-	next: function(err,watcher)
-	{
-		if (err) throw err;
-		console.log(getTimeStamp() + ': Watching for logs...');
 	}
 });

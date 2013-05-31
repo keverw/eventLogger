@@ -1,4 +1,4 @@
-#eventLogger v1#
+#eventLogger v1.0.1#
 
 eventLogger aims to be a event log collector server. The server itself is written in Node.js and should run on the same server as your website frontend(eg Apache HTTP Server, Nginx, etc). Current clients are written in PHP and Node.js, but in theory can be ported to any language such such as Ruby, Python, ASP, C, C++, etc.
 
