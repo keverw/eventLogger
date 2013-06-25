@@ -1,5 +1,5 @@
 CREATE TABLE `events` (
-  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `uuid` char(36) NOT NULL DEFAULT '',
   `data` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT '',
   `sortCode` varchar(255) NOT NULL DEFAULT '',
